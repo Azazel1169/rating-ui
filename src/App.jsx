@@ -3,7 +3,7 @@ import Rating from './components/rating';
 const App = () => {
   return (
     <>
-      <Rating />
+      <Rating heading='How do you feel about React?' />
     </>
   );
 };
