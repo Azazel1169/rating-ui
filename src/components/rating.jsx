@@ -5,6 +5,7 @@ const Rating = () => {
   const [hover, setHover] = useState(0);
 
   const stars = Array.from({ length: 5 }, (_, i) => i + 1);
+  const feedbackMessages = ['Terrible', 'poor', 'fair', 'good', 'excellent'];
 
   return (
     <div className='rating-container'>
@@ -22,6 +23,7 @@ const Rating = () => {
           </span>
         ))}
       </div>
+      {rating > 0 && <p className='feedback'>{feedbackMessages[rating - 1]}</p>}
     </div>
   );
 };
