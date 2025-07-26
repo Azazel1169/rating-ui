@@ -1,13 +1,28 @@
 import { useState } from 'react'; // Import useState hook from React
 import Star from './Star'; // Import the Star component
+import Modal from './Modal'
 
 const Rating = ({ heading = 'Rate your experience!', color = 'gold' }) => {
   // Define Rating component with default props
+  const feedbackMessages = ['Terrible', 'Poor', 'Fair', 'Good', 'Excellent']; // Feedback messages for each rating
   const [rating, setRating] = useState(0); // State for selected rating, default 0
   const [hover, setHover] = useState(0); // State for hovered star, default 0
+  const [submitted, setSubmitted] = useState(false);
 
   const stars = Array.from({ length: 5 }, (_, i) => i + 1); // Create array [1,2,3,4,5] for stars
-  const feedbackMessages = ['Terrible', 'Poor', 'Fair', 'Good', 'Excellent']; // Feedback messages for each rating
+
+  const handleSubmit = () => {
+    if (rating > 0) {
+      setSubmitted(true);
+    }
+  };
+
+  // Close modal and reset UI
+  const closeModal = () => {
+    setSubmitted(false);
+    setRating(0);
+    setHover(0);
+  };
 
   return (
     <div className='rating-container'>
@@ -36,6 +51,14 @@ const Rating = ({ heading = 'Rate your experience!', color = 'gold' }) => {
       </div>
       {rating > 0 && <p className='feedback'>{feedbackMessages[rating - 1]}</p>}{' '}
       {/* Show feedback if rated */}
+      <button
+        className='submit-btn'
+        onClick={handleSubmit}
+        disabled={rating === 0}
+      >
+        Submit
+      </button>
+      <Modal isOpen={submitted} onClose={closeModal} rating={rating} />
     </div>
   );
 };
